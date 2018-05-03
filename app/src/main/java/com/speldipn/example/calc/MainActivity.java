@@ -108,16 +108,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnLeftBracket:
+                temp += "(";
                 break;
             case R.id.btnRightBracket:
+                temp += ")";
                 break;
             case R.id.btnCalc:
-                temp = calc(temp);
+                temp = calcParser(temp);
                 result.setText(temp);
                 break;
         }
 
         exp.setText(temp);
+    }
+
+    public String calcParser(String s) {
+      String temp = "";
+
+      //  괄호 검사
+      int left = 0;
+      int right = 0;
+      for(int i = 0; i < s.length();++i) {
+        if(s.charAt(i) == '(') ++left;
+        if(s.charAt(i) == ')') ++right;
+      }
+      if(left != right) {
+        return "0";
+      }
+      int loop = left;
+      for(int i = 0; i < loop; ++i) {
+      }
+
+
+
+      return calc(s);
     }
 
     public String calc(String temp) {
@@ -179,7 +203,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return numList.get(0);
     }
 
-    public static String doPlus(String a, String b) {
+    public String doPlus(String a, String b) {
         if(a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
             return String.valueOf(Integer.parseInt(a) + Integer.parseInt(b));
         } else {
@@ -187,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public static String doMinus(String a, String b) {
+    public String doMinus(String a, String b) {
         if(a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
             return String.valueOf(Integer.parseInt(a) - Integer.parseInt(b));
         } else {
@@ -195,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public static String doMultiply(String a, String b) {
+    public String doMultiply(String a, String b) {
         if(a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
             return String.valueOf(Integer.parseInt(a) * Integer.parseInt(b));
         } else {
@@ -203,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public static String doDivide(String a, String b) {
+    public String doDivide(String a, String b) {
         if(a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
             return String.valueOf(Integer.parseInt(a) / Integer.parseInt(b));
         } else {
