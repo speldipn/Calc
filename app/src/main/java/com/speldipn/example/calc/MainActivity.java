@@ -6,13 +6,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     TextView exp;
     TextView result;
     String temp = "";
-    String prevInputKey = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btnMinus).setOnClickListener(this);
         findViewById(R.id.btnDivide).setOnClickListener(this);
         findViewById(R.id.btnMultiply).setOnClickListener(this);
-        findViewById(R.id.btnCalc).setOnClickListener(this);
+        findViewById(R.id.all).setOnClickListener(this);
         findViewById(R.id.btnCancel).setOnClickListener(this);
         findViewById(R.id.btnDot).setOnClickListener(this);
         findViewById(R.id.btnBack).setOnClickListener(this);
@@ -85,13 +85,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnMultiply:
                 temp += "*";
-                break;
+                break;xx
             case R.id.btnCancel:
                 temp = "0";
                 break;
             case R.id.btnDot:
-                if(exp.length() <= 1) {
-                    if(exp.equals("0")) {
+                if (exp.length() <= 1) {
+                    if (exp.equals("0")) {
                         temp += "0.";
                     } else {
                         temp += ".";
@@ -101,10 +101,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.btnBack:
-                if(temp.length() <= 1) {
+                if (temp.length() <= 1) {
                     temp = "0";
                 } else {
-                    temp = temp.substring(0, temp.length()-1);
+                    temp = temp.substring(0, temp.length() - 1);
                 }
                 break;
             case R.id.btnLeftBracket:
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnRightBracket:
                 temp += ")";
                 break;
-            case R.id.btnCalc:
+            case R.id.all:
                 temp = calcParser(temp);
                 result.setText(temp);
                 break;
@@ -122,26 +122,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         exp.setText(temp);
     }
 
-    public String calcParser(String s) {
-      String temp = "";
+    public String calcParser(String exp) {
+        String copy = new String(exp);
+        String temp = "";
+        String calced = "";
 
-      //  괄호 검사
-      int left = 0;
-      int right = 0;
-      for(int i = 0; i < s.length();++i) {
-        if(s.charAt(i) == '(') ++left;
-        if(s.charAt(i) == ')') ++right;
-      }
-      if(left != right) {
-        return "0";
-      }
-      int loop = left;
-      for(int i = 0; i < loop; ++i) {
-      }
+        Stack<Character> s = new Stack<>();
+        for (int i = 0; i < exp.length(); ++i) {
+            char ch = exp.charAt(i);
+            if (ch == ')') {
+                while (s.peek() != '(') {
+                    temp = s.pop() + temp;
+                }
+                s.pop();
+                calced = calc(temp);
+                copy = copy.replace("(" + temp + ")", calced);
+                for (int j = calced.length(); j > 0; --j) {
+                    s.push(calced.charAt(j - 1));
+                }
+                temp = "";
+            } else {
+                s.push(ch);
+            }
+        }
 
-
-
-      return calc(s);
+        return calc(copy);
     }
 
     public String calc(String temp) {
@@ -204,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public String doPlus(String a, String b) {
-        if(a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
+        if (a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
             return String.valueOf(Integer.parseInt(a) + Integer.parseInt(b));
         } else {
             return String.valueOf(Double.parseDouble(a) + Double.parseDouble(b));
@@ -212,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public String doMinus(String a, String b) {
-        if(a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
+        if (a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
             return String.valueOf(Integer.parseInt(a) - Integer.parseInt(b));
         } else {
             return String.valueOf(Double.parseDouble(a) - Double.parseDouble(b));
@@ -220,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public String doMultiply(String a, String b) {
-        if(a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
+        if (a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
             return String.valueOf(Integer.parseInt(a) * Integer.parseInt(b));
         } else {
             return String.valueOf(Double.parseDouble(a) * Double.parseDouble(b));
@@ -228,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public String doDivide(String a, String b) {
-        if(a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
+        if (a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
             return String.valueOf(Integer.parseInt(a) / Integer.parseInt(b));
         } else {
             return String.valueOf(Double.parseDouble(a) / Double.parseDouble(b));

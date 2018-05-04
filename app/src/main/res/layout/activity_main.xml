@@ -125,7 +125,7 @@
       android:layout_height="0dp"
       android:text="1"
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
-      app:layout_constraintBottom_toTopOf="@+id/btnCalc"
+      app:layout_constraintBottom_toTopOf="@+id/all"
       app:layout_constraintEnd_toStartOf="@+id/btn2"
       app:layout_constraintHorizontal_bias="0.5"
       app:layout_constraintStart_toStartOf="parent"
@@ -167,17 +167,20 @@
       app:layout_constraintStart_toEndOf="@+id/btn3"
       app:layout_constraintTop_toBottomOf="@+id/btnMinus" />
 
-  <Button
-      android:id="@+id/btnCalc"
-      android:layout_width="0dp"
-      android:layout_height="0dp"
-      android:text="CALC"
-      android:textAppearance="@style/TextAppearance.AppCompat.Large"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toStartOf="@+id/btn0"
-      app:layout_constraintHorizontal_bias="0.5"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toBottomOf="@+id/btn1" />
+    <ImageButton
+        android:id="@+id/all"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/clicked"
+        android:text="@string/btn_calc"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn0"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn1" />
 
   <Button
       android:id="@+id/btn0"
@@ -188,14 +191,14 @@
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/btnCancel"
       app:layout_constraintHorizontal_bias="0.5"
-      app:layout_constraintStart_toEndOf="@+id/btnCalc"
+      app:layout_constraintStart_toEndOf="@+id/all"
       app:layout_constraintTop_toBottomOf="@+id/btn2" />
 
   <Button
       android:id="@+id/btnCancel"
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:text="C"
+      android:text="@string/btn_cancel"
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toStartOf="@+id/btnDivide"
@@ -226,6 +229,7 @@
       android:layout_marginTop="8dp"
       android:gravity="bottom|right"
       android:hint="...."
+      android:text="@string/text_prepview"
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
@@ -271,7 +275,7 @@
       android:id="@+id/btnBack"
       android:layout_width="0dp"
       android:layout_height="0dp"
-      android:text="BACK"
+      android:text="@string/btn_back"
       android:textAppearance="@style/TextAppearance.AppCompat.Large"
       app:layout_constraintBottom_toTopOf="@+id/btnPlus"
       app:layout_constraintEnd_toEndOf="parent"
