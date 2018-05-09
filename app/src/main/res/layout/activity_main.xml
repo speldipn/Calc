@@ -126,7 +126,7 @@
         android:layout_height="0dp"
         android:text="1"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintBottom_toTopOf="@+id/all"
+        app:layout_constraintBottom_toTopOf="@+id/btnCalc"
         app:layout_constraintEnd_toStartOf="@+id/btn2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -169,7 +169,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnMinus" />
 
     <ImageButton
-        android:id="@+id/all"
+        android:id="@+id/btnCalc"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@android:color/transparent"
@@ -192,7 +192,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btnCancel"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/all"
+        app:layout_constraintStart_toEndOf="@+id/btnCalc"
         app:layout_constraintTop_toBottomOf="@+id/btn2" />
 
     <Button
