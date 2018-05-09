@@ -20,19 +20,18 @@ import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+  private static final String TAG = "SPELDIPN";
   TextView exp;
   TextView result;
   TextView aniView;
-  String temp = "";
+  String temp;
   String previewString;
   float aniView_x, aniView_y, aniView_w, aniView_h;
-  float cur_x, cur_y;
   ObjectAnimator view1AniX;
   ObjectAnimator view1AniY;
   ObjectAnimator viewAniXRotate;
   ObjectAnimator viewAniAlpha;
   ConstraintLayout constraintLayout;
-  View prevView = null;
   View fakeView;
 
   @Override
@@ -151,7 +150,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
       case R.id.btnDot:
         runAni = true;
         if (exp.length() <= 1) {
-          if (exp.equals("0")) {
+          String expStr = exp.getText().toString();
+          if (expStr.equals("0")) {
             temp += "0.";
           } else {
             temp += ".";
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         break;
       case R.id.btnCalc:
         temp = calcParser(temp);
-        if(temp.equals("")) {
+        if (temp.equals("")) {
           temp = previewString;
         } else {
           result.setText(temp);
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     fakeView.setVisibility(View.VISIBLE);
 
     // 디버그 메세지
-    Log.d("SPELDIPN", "=========" + view.getX() + " " + view.getY() + " " + view.getWidth() + " " + view.getHeight());
+//    Log.d(TAG, "=========" + view.getX() + " " + view.getY() + " " + view.getWidth() + " " + view.getHeight());
 
     float x = (aniView_x - view.getWidth() / 2) + aniView_w / 2;
     view1AniX = ObjectAnimator.ofFloat(fakeView, "X", x);
@@ -227,11 +227,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   public String calcParser(String exp) {
-    String copy = new String(exp);
+    String copy = exp;
     String temp = "";
-    String calced = "";
 
-    if(exp.equals("")) {
+    if (exp.equals("")) {
       return "";
     }
 
@@ -243,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
           temp = s.pop() + temp;
         }
         s.pop();
-        calced = calc(temp);
+        String calced = calc(temp);
         copy = copy.replace("(" + temp + ")", calced);
         for (int j = calced.length(); j > 0; --j) {
           s.push(calced.charAt(j - 1));
@@ -266,18 +265,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ArrayList<String> numList = new ArrayList<>();
     ArrayList<String> operList = new ArrayList<>();
     String[] arr = temp.split("");
-    for (int i = 0; i < arr.length; ++i) {
-      switch (arr[i]) {
+    for (String str : arr) {
+      switch (str) {
         case "+":
         case "-":
         case "*":
         case "/":
           numList.add(strValue);
-          operList.add(arr[i]);
+          operList.add(str);
           strValue = "";
           break;
         default:
-          strValue += arr[i];
+          strValue += str;
       }
     }
 
@@ -317,7 +316,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   public String doPlus(String a, String b) {
-    if (a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
+    if (!a.contains(".") && !b.contains(".")) {
       return String.valueOf(Integer.parseInt(a) + Integer.parseInt(b));
     } else {
       return String.valueOf(Double.parseDouble(a) + Double.parseDouble(b));
@@ -325,7 +324,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   public String doMinus(String a, String b) {
-    if (a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
+    if (!a.contains(".") && !b.contains(".")) {
       return String.valueOf(Integer.parseInt(a) - Integer.parseInt(b));
     } else {
       return String.valueOf(Double.parseDouble(a) - Double.parseDouble(b));
@@ -333,7 +332,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   public String doMultiply(String a, String b) {
-    if (a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
+    if (!a.contains(".") && !b.contains(".")) {
       return String.valueOf(Integer.parseInt(a) * Integer.parseInt(b));
     } else {
       return String.valueOf(Double.parseDouble(a) * Double.parseDouble(b));
@@ -341,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
   }
 
   public String doDivide(String a, String b) {
-    if (a.indexOf(".") == (-1) && b.indexOf(".") == (-1)) {
+    if (!a.contains(".") && !b.contains(".")) {
       return String.valueOf(Integer.parseInt(a) / Integer.parseInt(b));
     } else {
       return String.valueOf(Double.parseDouble(a) / Double.parseDouble(b));
