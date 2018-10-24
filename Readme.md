@@ -2,4 +2,4 @@
 
 ### 동작 시현
 
-![](/screenshot/calc.gif)
+![](/screenshot/calc1.gif)
